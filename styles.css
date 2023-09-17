@@ -1,0 +1,251 @@
+/* styles.css */
+
+/* Reset some default styles */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+}
+
+/* Set a background color for the entire page */
+body {
+    background-color:#171717;
+    color: #E8E5DA; /* Set text color to white for the entire page */
+}
+
+/* Define custom fonts using @font-face */
+@font-face {
+    font-family: 'TitilliumWeb-Bold';
+    src: url('Titillium_Web/TitilliumWeb-Bold.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'TitilliumWeb-SemiBold';
+    src: url('Titillium_Web/TitilliumWeb-SemiBold.ttf') format('truetype');
+
+}
+
+@font-face {
+    font-family: 'TitilliumWeb-Regular';
+    src: url('Titillium_Web/TitilliumWeb-Regular.ttf') format('truetype');
+
+}
+
+@font-face {
+    font-family: 'TitilliumWeb-Light';
+    src: url('Titillium_Web/TitilliumWeb-Light.ttf') format('truetype');
+
+}
+
+h1 {
+    margin-top: 0px; /* Adjust the top margin as needed */
+    margin-bottom: 0px; /* Adjust the bottom margin as needed */
+}
+
+p{
+    font-family: 'TitilliumWeb-Light', sans-serif; /* Apply custom font for text*/
+    font-size: 17px;
+    color: #a6a39c;
+}
+
+.container {
+    display: flex;
+    margin-left: 12%;
+    margin-right: 12%;
+    margin-top: 8%;
+}
+
+.sidebar {
+    width: 30%; /* Set sidebar width to 40% of the screen */
+    height: 100vh;
+    background-color: #171717; /* Blue sidebar background color */
+    position: fixed; /* Make the sidebar fixed *//
+}
+
+.name-section {
+    font-size: 24px;
+    text-align: left; /* Align your name to the left */
+    font-family: 'TitilliumWeb-Bold', sans-serif; /* Apply custom font for your name */
+}
+
+.description{
+    font-size: 12px;
+    margin-bottom: 7%;
+    text-align: left; /* Align your name to the left */
+    font-family: 'TitilliumWeb-SemiBold', sans-serif; /* Apply custom font for your name */
+    color: #a6a39c;
+}
+
+.sections {
+    list-style-type: none;
+    margin-left: 4%;
+    text-align: left;
+}
+
+ul {
+    padding-left: 0;
+  }
+
+.sections a {
+    text-decoration: none;
+    color: #E8E5DA; /* Set text color to white for sidebar section names */
+    transition: background-color 0.3s, color 0.3s; /* Add smooth transition effects */
+    font-family: 'TitilliumWeb-Regular', sans-serif; /* Apply custom font for section names */
+    font-size: 18px;
+}
+
+.content a {
+    text-decoration: none;
+    color: #E8E5DA; /* Set text color to white for sidebar section names */
+    font-family: 'TitilliumWeb-SemiBold', sans-serif; /* Apply custom font for section names */
+    font-size: 18px;
+}
+
+.content a:hover {
+    color: #9EB7E5; /* Change link text color when hovered */
+}
+
+/* Pink highlight effect for the active sidebar link */
+.sections a.active {
+    color: #9EB7E5; /* Change text color to pink for the active link */
+    text-align: left; /* Align the active section title to the left */
+    font-family: 'TitilliumWeb-SemiBold', sans-serif; /* Apply custom font for the active link */
+}
+
+.content {
+    width: 46%; /* Set content width to 60% of the screen */
+    margin-left: 42%; /* Add margin to the content to offset the fixed sidebar */
+    background-color: #171717; /* Dark background color for the content */
+    color: #E8E5DA; /* Set text color to white for content sections */
+    overflow-y: auto; /* Allow scrolling within the content */
+}
+
+.section-title {
+    margin-bottom: 20px;
+    font-size: 24px; /* Increase section title font size */
+    /* Leave content section titles centered (default behavior) */
+    font-family: 'TitilliumWeb-SemiBold', sans-serif; /* Apply custom font for section titles */
+}
+
+.Socials-section {
+    align-items: center; /* Vertically center-align elements */
+    font-size: 8px; /* Adjust the font size as needed */
+    font-family: 'TitilliumWeb-SemiBold', sans-serif; /* Apply custom font for your name */
+    color: #a6a39c;
+    margin-top: 50%;
+    position: absolute;
+    margin-top: 60%;
+}
+
+.section {
+    margin-bottom: 15%;
+}
+
+.socials-logo {
+    width: 8%; /* Adjust the width as needed */
+    height: 8%; /* Maintain the aspect ratio */
+    margin-right: 20px; /* Add margin for spacing between logo and name */
+}
+
+/* Add a class for the cursor highlight */
+.cursor-highlight {
+    position: fixed;
+    width: 1200px; /* Adjust the size as needed */
+    height: 1200px; /* Adjust the size as needed */
+    border-radius: 50%;
+    pointer-events: none; /* Allow clicks to pass through the highlight */
+    transform: translate(-50%, -50%);
+    mix-blend-mode: lighten; /* Adjust the blend mode as needed */
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.07) 0%, rgba(255, 255, 255, 0.03) 35%, rgba(255, 255, 255, 0.0004) 60%, rgba(255, 255, 255, 0) 100%);
+    z-index: 9999; /* Ensure it's above other elements */
+}
+
+/* Style for the resume blocks */
+.resume-block {
+    margin-bottom: 10px;
+    padding: 20px;
+    background-color: #171717;
+    border: 1px solid #171717;
+    border-radius: 5px;
+
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+}
+
+/* Change link color on hover */
+.resume-block:hover {
+    background-color: #383838; /* Change to the desired hover color */
+    border-color: #383838;
+    transition: background-color 0.5s;
+    transform: border-color 0.5s;
+}
+
+.column1 {
+    display: flex;
+    flex-direction: column;
+    flex-basis: 100%;
+    flex: 3;
+}
+
+.column2 {
+    display: flex;
+    flex-direction: column;
+    flex-basis: 100%;
+    flex: 7;
+  }
+
+/* Style for company logos (adjust size as needed) */
+.company-logo img {
+    max-width: 100px;
+    max-height: 100px;
+}
+
+/* Style for company information */
+.company-info {
+    margin-top: 10px;
+}
+
+/* Style for the date column */
+.date {
+    text-align: left; /* Align the text to the right */
+    font-size: 14px;
+
+}
+
+/* Style for the information column */
+.info {
+    text-align: left;
+}
+
+.content h3 {
+    font-size: 16px;
+    font-family: 'TitilliumWeb-SemiBold', sans-serif; /* Apply custom font for company name */
+    margin: 0;
+}
+
+.row1 {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+}
+
+.row2{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.resume-element{
+    display: flex;
+    flex: 0 1 auto;
+    padding-left: 9px;
+    padding-right: 9px;
+    margin: 5px;
+    color:#171717;
+    border: 1px solid #9EB7E5;
+    background-color: #9EB7E5;
+    border-radius: 12px;
+    justify-content: center;
+    font-size: 14px;
+}
