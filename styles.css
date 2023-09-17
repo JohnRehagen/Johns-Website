@@ -16,25 +16,24 @@ body {
 /* Define custom fonts using @font-face */
 @font-face {
     font-family: 'TitilliumWeb-Bold';
-    src: url('Titillium_Web/TitilliumWeb-Bold.ttf') format('truetype');
+    src: url('TitilliumWeb-Bold.ttf') format('ttf');
 }
 
 @font-face {
     font-family: 'TitilliumWeb-SemiBold';
-    src: url('Titillium_Web/TitilliumWeb-SemiBold.ttf') format('truetype');
+    src: url('TitilliumWeb-SemiBold.ttf') format('ttf');
 
 }
 
 @font-face {
     font-family: 'TitilliumWeb-Regular';
-    src: url('Titillium_Web/TitilliumWeb-Regular.ttf') format('truetype');
+    src: url('TitilliumWeb-Regular.ttf') format('ttf');
 
 }
 
 @font-face {
     font-family: 'TitilliumWeb-Light';
-    src: url('Titillium_Web/TitilliumWeb-Light.ttf') format('truetype');
-
+    src: url('TitilliumWeb-Light.ttf') format('ttf');
 }
 
 h1 {
