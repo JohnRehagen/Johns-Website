@@ -16,24 +16,24 @@ body {
 /* Define custom fonts using @font-face */
 @font-face {
     font-family: 'TitilliumWeb-Bold';
-    src: url('TitilliumWeb-Bold.ttf') format('ttf');
+    src: url('https://s3.us-east-2.amazonaws.com/www.johnrehagen.com/TitilliumWeb-Bold.ttf') format('truetype');
 }
 
 @font-face {
     font-family: 'TitilliumWeb-SemiBold';
-    src: url('TitilliumWeb-SemiBold.ttf') format('ttf');
+    src: url('https://s3.us-east-2.amazonaws.com/www.johnrehagen.com/TitilliumWeb-SemiBold.ttf') format('truetype');
 
 }
 
 @font-face {
     font-family: 'TitilliumWeb-Regular';
-    src: url('TitilliumWeb-Regular.ttf') format('ttf');
+    src: url('https://s3.us-east-2.amazonaws.com/www.johnrehagen.com/TitilliumWeb-Regular.ttf') format('truetype');
 
 }
 
 @font-face {
     font-family: 'TitilliumWeb-Light';
-    src: url('TitilliumWeb-Light.ttf') format('ttf');
+    src: url('https://s3.us-east-2.amazonaws.com/www.johnrehagen.com/TitilliumWeb-Light.ttf') format('truetype');
 }
 
 h1 {
@@ -82,6 +82,7 @@ p{
 
 ul {
     padding-left: 0;
+    margin: 0;
   }
 
 .sections a {
