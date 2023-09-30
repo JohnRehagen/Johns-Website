@@ -248,3 +248,8 @@ ul {
     justify-content: center;
     font-size: 14px;
 }
+
+.scaled-image {
+    max-width: 100%; /* Make the image scale to the width of its container */
+    height: auto; /* Maintain the aspect ratio */
+}
