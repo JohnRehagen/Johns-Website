@@ -7,3 +7,7 @@ https://medium.com/@kyle.galbraith/how-to-host-a-website-on-s3-without-getting-l
  
 Github autosync to AWS via codepipeline
 https://medium.com/avmconsulting-blog/automate-static-website-deployment-from-github-to-s3-using-aws-codepipeline-16acca25ebc1#:~:text=Bucket%3A%20select%20the%20s3%20bucket,the%20Connect%20to%20Github%20button.
+
+mnist
+https://medium.com/@o.kroeger/tensorflow-mnist-and-your-own-handwritten-digits-4d1cd32bbab4
+https://github.com/brendanartley/Medium-Article-Code/blob/main/code/mnist-keras-cnn-99-6.ipynb

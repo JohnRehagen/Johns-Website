@@ -171,6 +171,22 @@ ul {
     flex-wrap: nowrap;
 }
 
+.button1 {
+    background-color: #171717;
+    border: 1px solid #171717;
+    border-radius: 10px;
+    font-size: 24px; /* Set font size to 12px */
+    color: #a6a39c;/* Set text color to off white */
+    font-family: 'TitilliumWeb-Bold', sans-serif;
+}
+
+.button1:hover {
+    background-color: #383838; /* Change to the desired hover color */
+    border-color: #383838;
+    transition: background-color 0.5s;
+    transform: border-color 0.5s;
+}
+
 /* Change link color on hover */
 .resume-block:hover {
     background-color: #383838; /* Change to the desired hover color */
@@ -222,13 +238,6 @@ ul {
     margin: 0;
 }
 
-
-.content h4 {
-    font-size: 22px;
-    font-family: 'TitilliumWeb-SemiBold', sans-serif; /* Apply custom font for company name */
-    margin: 0;
-}
-
 .row1 {
     display: flex;
     flex-direction: row;
@@ -258,4 +267,15 @@ ul {
 .scaled-image {
     max-width: 100%; /* Make the image scale to the width of its container */
     height: auto; /* Maintain the aspect ratio */
+}
+
+#canvas_div {
+    text-align: center;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+canvas {
+    margin-top: 40px;
+    margin-bottom: 20px;
 }
