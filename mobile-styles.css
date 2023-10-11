@@ -66,6 +66,7 @@ p{
 
 .content {
     width: 100%; /* Set content width to 95% of the screen */
+    margin-top: 5%;
     background-color: #ececec; /* Dark background color for the content */
     color: #36454F; /* Set text color to white for content sections */
     overflow-y: auto; /* Allow scrolling within the content */

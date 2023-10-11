@@ -12,6 +12,11 @@
     -->
 
     <script>
+
+        /*
+        // Set a threshold width (e.g., 768 pixels)
+        const thresholdWidth = 765;
+
         // Function to debounce the resize event
         function debounce(func, delay) {
             let timeout;
@@ -25,10 +30,13 @@
             };
         }
 
-        // Function to reload the page on any window resize
+        // Function to reload the page on window resize only if the width exceeds the threshold
         function reloadOnResize() {
             const reloadPage = function () {
-                location.reload();
+                // Check if the window width exceeds the threshold
+                if (window.innerWidth > thresholdWidth) {
+                    location.reload();
+                }
             };
 
             const debouncedReload = debounce(reloadPage, 250); // Adjust the debounce delay as needed
@@ -37,9 +45,10 @@
             window.addEventListener('resize', debouncedReload);
         }
 
-        // Call the function to reload on any window resize
+        // Call the function to reload on window resize only when width exceeds the threshold
         reloadOnResize();
-        
+        */
+
         // Load different CSS and scripts based on window width
         if (window.innerWidth <= 768) {
             var cssLink = document.createElement("link");
