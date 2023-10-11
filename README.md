@@ -1,5 +1,8 @@
 # Website
 
+visit https://www.johnrehagen.com
+Now supporting mobile and computer visits
+
 Website hosted on AWS S3
 DNS is Cloudflare
 
