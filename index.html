@@ -7,27 +7,66 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+    <!--
+    <link rel="stylesheet" href="mobile-styles.css">
+    -->
+
     <script>
-        if (window.innerWidth <= 768) { // Adjust the screen width threshold as needed
-          var cssLink = document.createElement("link");
-          cssLink.href = "styles.css";
-          cssLink.rel = "stylesheet";
-          document.head.appendChild(cssLink);
-      
-          var scriptElement = document.createElement("script");
-          scriptElement.src = "scripts.js";
-          document.body.appendChild(scriptElement);
-        } else {
-          var cssLink = document.createElement("link");
-          cssLink.href = "styles2.css";
-          cssLink.rel = "stylesheet";
-          document.head.appendChild(cssLink);
-      
-          var scriptElement = document.createElement("script");
-          scriptElement.src = "scripts.js";
-          document.body.appendChild(scriptElement);
+        // Function to debounce the resize event
+        function debounce(func, delay) {
+            let timeout;
+            return function () {
+                const context = this;
+                const args = arguments;
+                clearTimeout(timeout);
+                timeout = setTimeout(function () {
+                    func.apply(context, args);
+                }, delay);
+            };
         }
-      </script>
+
+        // Function to reload the page on any window resize
+        function reloadOnResize() {
+            const reloadPage = function () {
+                location.reload();
+            };
+
+            const debouncedReload = debounce(reloadPage, 250); // Adjust the debounce delay as needed
+
+            // Add an event listener for the window resize event
+            window.addEventListener('resize', debouncedReload);
+        }
+
+        // Call the function to reload on any window resize
+        reloadOnResize();
+        
+        // Load different CSS and scripts based on window width
+        if (window.innerWidth <= 768) {
+            var cssLink = document.createElement("link");
+            cssLink.href = "mobile-styles.css";
+            cssLink.rel = "stylesheet";
+            document.head.appendChild(cssLink);
+    
+            var scriptElement = document.createElement("script");
+            scriptElement.src = "mobile-scripts.js";
+            document.body.appendChild(scriptElement);
+    
+            // Apply styles to the .sidebar element
+            const sidebar = document.querySelector('.sidebar');
+            sidebar.style.fontSize = '24px';
+            sidebar.style.fontWeight = 'bold';
+        } else {
+            var cssLink = document.createElement("link");
+            cssLink.href = "desktop-styles.css";
+            cssLink.rel = "stylesheet";
+            document.head.appendChild(cssLink);
+    
+            var scriptElement = document.createElement("script");
+            scriptElement.src = "desktop-scripts.js";
+            document.body.appendChild(scriptElement);
+        }
+    </script>
+        
       
     <title>John Rehagen</title>
 </head>
