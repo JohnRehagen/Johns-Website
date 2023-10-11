@@ -6,7 +6,29 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="styles2.css">
+
+    <script>
+        if (window.innerWidth <= 768) { // Adjust the screen width threshold as needed
+          var cssLink = document.createElement("link");
+          cssLink.href = "styles.css";
+          cssLink.rel = "stylesheet";
+          document.head.appendChild(cssLink);
+      
+          var scriptElement = document.createElement("script");
+          scriptElement.src = "scripts.js";
+          document.body.appendChild(scriptElement);
+        } else {
+          var cssLink = document.createElement("link");
+          cssLink.href = "styles2.css";
+          cssLink.rel = "stylesheet";
+          document.head.appendChild(cssLink);
+      
+          var scriptElement = document.createElement("script");
+          scriptElement.src = "scripts.js";
+          document.body.appendChild(scriptElement);
+        }
+      </script>
+      
     <title>John Rehagen</title>
 </head>
 <body>
@@ -42,7 +64,7 @@
             <!-- Content Sections -->
             <div class="section" id="About">
                 <p>Hi! I'm an engineering student seeking an internship for <a>Summer 2024</a>. I've been interning since the summer before college and believe I have the drive, desire to learn and experience to provide value to your team.</p>
-                <p>I've led a team to build <a href="https://frc-6672.square.site/" target="_blank">150 lb robots</a>, worked to design and manufacture a <a href="https://www.tamusrt.org/" target="_blank">30,000 ft hybrid engined rocket</a> and now am working in  <a href="https://rivian.com/" target="_blank">Manufacturing Engineering at Rivian</a> to build electric vehicles better and <a href="https://rivian.com/forever" target="_blank">keep the world adventurous forever</a>.</p>
+                <p>I've led a team to build <a href="https://frc-6672.square.site/" target="_blank">150 lb robots</a>, designed and tested <a href="https://www.vexrobotics.com/">retail products</a>, worked to design and manufacture a <a href="https://www.tamusrt.org/" target="_blank">30,000 ft hybrid engined rocket</a> and now am working in  <a href="https://rivian.com/" target="_blank">Manufacturing Engineering at Rivian</a> to build electric vehicles better and <a href="https://rivian.com/forever" target="_blank">keep the world adventurous forever</a>.</p>
                 <p>When I’m not working on engineering, I'm usually <a href="https://www.instagram.com/john_climbs/" target="_blank">climbing rocks</a>, on a <a href="https://www.strava.com/athletes/21099946" target="_blank">run</a> or enjoying a good coffee. I think life is one big adventure and I'm on here to make the most of it, whether it's in the tech world or the great outdoors. </p>
             </div>
 
@@ -257,7 +279,7 @@
                             <div class="column2">
                                 <div class="info">
                                     <h4>Settlers of Catan VBA calculator</h4>
-                                    <p>Settlers of Catan is one of my favorite board games. I have great memories of playing it around my family's kitchen table or with friends. I built this calculator as a thought experiment - using my VBA skills to apply expected value and game theory into an interactive playgrond to understand the game better.</p>
+                                    <p>Settlers of Catan is one of my favorite board games. I have great memories of playing it with my family around our kitchen table and with friends. I built this calculator as a thought experiment - using my VBA skills to apply expected value and game theory into an interactive playgrond to understand the game better.</p>
                                     <p>Click here to learn more about the project</p>
                                 </div>
                             </div>
