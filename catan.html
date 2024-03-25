@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <script>
+    if (window.innerWidth <= 768) {
+        var cssLink = document.createElement("link");
+        cssLink.href = "mobile-styles.css";
+        cssLink.rel = "stylesheet";
+        document.head.appendChild(cssLink);
+
+        var scriptElement = document.createElement("script");
+        scriptElement.src = "mobile-scripts.js";
+        document.body.appendChild(scriptElement);
+
+        // Apply styles to the .sidebar element
+        const sidebar = document.querySelector('.sidebar');
+        sidebar.style.fontSize = '24px';
+        sidebar.style.fontWeight = 'bold';
+    } else {
+        var cssLink = document.createElement("link");
+        cssLink.href = "desktop-styles.css";
+        cssLink.rel = "stylesheet";
+        document.head.appendChild(cssLink);
+
+        var scriptElement = document.createElement("script");
+        scriptElement.src = "desktop-scripts.js";
+        document.body.appendChild(scriptElement);
+    }
+    </script>
+    <title>John Rehagen</title>
+</head>
+<body>
+    <div class="container">
+        <div class="sidebar">
+            <!-- Name Section -->
+            <div class="name-section">
+                <h1>John Rehagen</h1>
+            </div>
+
+            <!-- Sections List -->
+            <ul class="sections">
+                <li><a href="#Projects" class="style1">Projects -> Catan VBA Calculator</a></li>
+                <a href="index.html" class="external-link">Back to Home</a>
+                <!-- Add more section links as needed -->
+            </ul>
+
+            <div class="Socials-section">
+                <a href="https://www.linkedin.com/in/john-rehagen/" target="_blank" rel="noopener noreferrer">
+                    <img src="LinkedIn_icon.png" alt="LinkedIn Logo" class="socials-logo">
+                </a>
+
+            </div>
+
+        </div>
+    
+        <div class="content">
+            <div class="section" id = Projects>
+                <p>Settlers of Catan is one of my favorite board games. I have great memories of playing it with my family around our kitchen table and with friends. I built this calculator as a thought experiment - using my VBA skills to apply expected value and game theory into an interactive playgrond to understand the game better.</p>
+                <p>The object of the game is to gather more resources than your opponents and use the resources to grow your settlement faster than them in order to win.</p>
+                <p>The user inputs the tile resource and number for each tile before pressing the "run calculation" button, as shown in the gif below.</p>
+                <div class="gif-container">
+                    <!-- Embed the GIF with the id "catanGIF" -->
+                    <img id="catanGIF" src="catancalculator.gif" alt="GIF of catan calculator operating">
+                </div>
+                <p>The VBA code then calucates the expected value of each node, where players can place pieces, and breaks them down by resource. It also populates the graphical representation of the board, helping the user to easily relate the calculation to the real world.</p>
+                <p>The far right table allows the player to compare the strength of each node, including the strength of each adjacent resource. You'll also notice that each node is populated with a color that represents it's strength, helping correlate node name to actual location on the board.</p>
+                <p>The middle-bottom table allows the player to see the relative strength of each resource according to the specific board setup. As the setup is random each game and there are a finite number of resources, often games will have different balances of resources in play. This allows the player to quickly know what will be prevalent and scarce in the game; helping them to make decisions accordingly.</p>
+                <p>Although it is just a fun application, this calculator is meant to demonstrate how powerful excel VBA is, and my competency with it. I haven't mentioned this yet, but I only spent about a day producing this project.</p>
+                <p>The macro-enabled excel file can be found <a href="https://s3.us-east-2.amazonaws.com/www.johnrehagen.com/Catan.xlsm" download="">here</a>. Note that because this sheet is macro enabled, your system will be wary of viruses. If you wish to run the macros, you must give the file permission in the trust center.</p>
+            </div>
+        </div>
+
+    <!-- Your existing JavaScript script tag -->
+    <script src="script.js"></script>
+    </body>
+    </html>
+</body>
+</html>

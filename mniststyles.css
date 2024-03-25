@@ -279,3 +279,20 @@ canvas {
     margin-top: 40px;
     margin-bottom: 20px;
 }
+
+#imageContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#imageContainer img {
+    margin: 10px; /* Add spacing between images */
+    width: 30%; /* Set a percentage-based width for the images */
+}
+
+#arrowImage {
+    width: 50px; /* Adjust the arrow image width */
+    height: auto; /* Automatically adjust height to maintain aspect ratio */
+    margin: 10px; /* Add spacing around the arrow image */
+}

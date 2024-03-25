@@ -129,6 +129,8 @@ function resizeCanvas() {
 
 // Call the resizeCanvas function initially and when the window is resized
 resizeCanvas();
+clearArea();
+
 window.addEventListener("resize", resizeCanvas);
 
 // event.offsetX, event.offsetY gives the (x,y) offset from the edge of the canvas.
@@ -162,8 +164,8 @@ canvas.addEventListener('mouseup', (e) => {
 
 function calculateLineWidth() {
     const containerWidth = document.getElementById('canvas_div').clientWidth;
-    const fraction = 1 / 14;
-    return 1;
+    const fraction = 1 / 30 * containerWidth;
+    return fraction;
 }
 
 function drawLine(context, x1, y1, x2, y2) {
@@ -178,19 +180,31 @@ function drawLine(context, x1, y1, x2, y2) {
 }
 
 function clearArea() {
+    const context = document.getElementById('canvas').getContext('2d');
+    
+    // Clear the canvas
     context.setTransform(1, 0, 0, 1, 0, 0);
     context.clearRect(0, 0, context.canvas.width, context.canvas.height);
-    context.fillStyle = 'white'; // You can use asny color you want
-    context.fillRect(0, 0, canvas.width, canvas.height);
+    context.fillStyle = 'white';
+    context.fillRect(0, 0, context.canvas.width, context.canvas.height);
+
     // Clear the input box
     document.getElementById('letterInput').value = '';
+
+    // Clear the displayed images
+    const imageElements = document.querySelectorAll('#imageContainer img');
+    for (const img of imageElements) {
+        img.style.display = 'none';
+    }    
+
+    predictionContainer.textContent = `Predicted Digit:`;
 }
 
 // Set the canvas background color to white
 context.fillStyle = 'white'; // You can use any color you want
 context.fillRect(0, 0, canvas.width, canvas.height);
 
-
+let predictedDigit = '';
 
 async function prepareImageForMNIST() {
     const letterInput = document.getElementById('letterInput').value.trim();
@@ -202,42 +216,195 @@ async function prepareImageForMNIST() {
         // Get the current canvas data
         const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
 
-        // Invert the colors of the image
-        for (let i = 0; i < imageData.data.length; i += 4) {
-            // imageData.data contains RGBA values (4 channels per pixel)
-            // Invert each channel (R, G, B) individually
-            imageData.data[i] = 255 - imageData.data[i];     // Red channel
-            imageData.data[i + 1] = 255 - imageData.data[i + 1]; // Green channel
-            imageData.data[i + 2] = 255 - imageData.data[i + 2]; // Blue channel
-            // Alpha channel (transparency) remains unchanged
+        const width = canvas.width;
+        const height = canvas.height;
+
+        // FIND TOP CROP
+        let imgTop = 0;
+        // Loop through rows, starting at the top and defining imgTop once a pixel is not white
+        for (let y = 0; y < height; y++) {
+            // Loop through the pixels in the current row
+            let rowHasNonWhitePixel = false;
+            for (let x = 0; x < width; x++) {
+                // Get the pixel data for the current pixel
+                const pixelData = ctx.getImageData(x, y, 1, 1).data;
+
+                // Check if the pixel is not white
+                if (pixelData[0] !== 255 || pixelData[1] !== 255 || pixelData[2] !== 255) {
+                    // Log the row value and break the loop
+                    imgTop = y;
+                    rowHasNonWhitePixel = true;
+                    break;
+                }
+            }
+
+            // If a non-white pixel is found in this row, exit the row loop
+            if (rowHasNonWhitePixel) {
+                break;
+            }
         }
 
-        // Put the modified imageData back to the canvas
-        ctx.putImageData(imageData, 0, 0);
+        // FIND BOTTOM CROP
+        let imgBottom = height;
+        // Loop through rows, starting at the bottom and defining imgBottom once a pixel is not white
+        for (let y = height - 1; y >= 0; y--) {
+            // Loop through the pixels in the current row
+            let rowHasNonWhitePixel = false;
+            for (let x = 0; x < width; x++) {
+                // Get the pixel data for the current pixel
+                const pixelData = ctx.getImageData(x, y, 1, 1).data;
 
-        // Resize the canvas to 28x28 pixels
+                // Check if the pixel is not white
+                if (pixelData[0] !== 255 || pixelData[1] !== 255 || pixelData[2] !== 255) {
+                    // Log the row value and break the loop
+                    imgBottom = y;
+                    rowHasNonWhitePixel = true;
+                    break;
+                }
+            }
+
+            // If a non-white pixel is found in this row, exit the row loop
+            if (rowHasNonWhitePixel) {
+                break;
+            }
+        }
+
+        // FIND LEFT CROP
+        let imgLeft = 0;
+        // Loop through columns, starting from the left and defining imgLeft once a pixel is not white
+        for (let x = 0; x < width; x++) {
+            // Loop through the pixels in the current column
+            let columnHasNonWhitePixel = false;
+            for (let y = 0; y < height; y++) {
+                // Get the pixel data for the current pixel
+                const pixelData = ctx.getImageData(x, y, 1, 1).data;
+
+                // Check if the pixel is not white
+                if (pixelData[0] !== 255 || pixelData[1] !== 255 || pixelData[2] !== 255) {
+                    // Log the column value and break the loop
+                    imgLeft = x;
+                    columnHasNonWhitePixel = true;
+                    break;
+                }
+            }
+
+            // If a non-white pixel is found in this column, exit the column loop
+            if (columnHasNonWhitePixel) {
+                break;
+            }
+        }
+
+        // FIND RIGHT CROP
+        let imgRight = width;
+        // Loop through columns, starting from the right and defining imgRight once a pixel is not white
+        for (let x = width - 1; x >= 0; x--) {
+            // Loop through the pixels in the current column
+            let columnHasNonWhitePixel = false;
+            for (let y = 0; y < height; y++) {
+                // Get the pixel data for the current pixel
+                const pixelData = ctx.getImageData(x, y, 1, 1).data;
+
+                // Check if the pixel is not white
+                if (pixelData[0] !== 255 || pixelData[1] !== 255 || pixelData[2] !== 255) {
+                    // Log the column value and break the loop
+                    imgRight = x;
+                    columnHasNonWhitePixel = true;
+                    break;
+                }
+            }
+
+            // If a non-white pixel is found in this column, exit the column loop
+            if (columnHasNonWhitePixel) {
+                break;
+            }
+        }
+
+        const croppedCanvas = document.createElement('canvas');
+        const croppedCtx = croppedCanvas.getContext('2d');
+        croppedCanvas.width = imgRight - imgLeft;
+        croppedCanvas.height = imgBottom - imgTop;
+
+        croppedCtx.drawImage(canvas, imgLeft, imgTop, imgRight - imgLeft, imgBottom - imgTop, 0, 0, imgRight - imgLeft, imgBottom - imgTop);
+        // Convert the cropped canvas to a data URL
+        const croppedDataURL = croppedCanvas.toDataURL("image/png");
+
+        
+        // Create an invisible <a> element for downloading
+        const downloadLink1 = document.createElement('a');
+        downloadLink1.style.display = 'none';
+        document.body.appendChild(downloadLink1);
+
+        // Set the href of the <a> element to the data URL
+        downloadLink1.href = croppedDataURL;
+        downloadLink1.download = `${letterInput}.png`; // Set the file name
+
+        // Trigger a click event to initiate the download
+        //downloadLink1.click();
+        
+
+        // Create a new 20x20 canvas
         const resizedCanvas = document.createElement('canvas');
-        resizedCanvas.width = 28;
-        resizedCanvas.height = 28;
         const resizedCtx = resizedCanvas.getContext('2d');
-        resizedCtx.drawImage(canvas, 0, 0, 20, 20);
+        resizedCanvas.width = 20;
+        resizedCanvas.height = 20;
 
-        // Convert the resized canvas to a Blob
-        const blob = await new Promise((resolve) => {
-            resizedCanvas.toBlob((b) => resolve(b), 'image/png');
-        });
+        // Draw the cropped image onto the 20x20 canvas, scaling it down
+        resizedCtx.drawImage(croppedCanvas, 0, 0, croppedCanvas.width, croppedCanvas.height, 0, 0, 20, 20);
 
-        // Create a URL for the Blob
-        const blobURL = URL.createObjectURL(blob);
+        // Create a new 28x28 canvas
+        const finalCanvas = document.createElement('canvas');
+        const finalCtx = finalCanvas.getContext('2d');
+        finalCanvas.width = 28;
+        finalCanvas.height = 28;
+
+        // Calculate offsets for centering the 20x20 canvas
+        const xOffset = (28 - 20) / 2;
+        const yOffset = (28 - 20) / 2;
+
+        // Draw the 20x20 canvas onto the 28x28 canvas
+        finalCtx.fillStyle = 'white'; // Set the border to white
+        finalCtx.fillRect(0, 0, 28, 28); // Fill the canvas with white
+        finalCtx.drawImage(resizedCanvas, xOffset, yOffset);
+
+        // Convert the final canvas to a data URL
+        const finalDataURL = finalCanvas.toDataURL("image/png");
 
         // Create an invisible <a> element for downloading
         const downloadLink = document.createElement('a');
         downloadLink.style.display = 'none';
         document.body.appendChild(downloadLink);
 
-        // Set the href of the <a> element to the Blob URL
-        downloadLink.href = blobURL;
-        downloadLink.download = `${letterInput}.png`; // Set the file name
+        // Set the href of the <a> element to the data URL
+        downloadLink.href = finalDataURL;
+        downloadLink.download = `${letterInput}_final.png`; // Set the file name
+
+        // Trigger a click event to initiate the download
+        //downloadLink.click();
+
+        
+        // Convert the resized canvas to a data URL
+        const resizedDataURL = resizedCanvas.toDataURL("image/png");
+
+        // Create an invisible <a> element for downloading
+        const downloadLink3 = document.createElement('a');
+        downloadLink3.style.display = 'none';
+        document.body.appendChild(downloadLink3);
+
+        // Set the href of the <a> element to the data URL
+        downloadLink3.href = resizedDataURL;
+        downloadLink3.download = `${letterInput}_resized.png`; // Set the file name
+
+        // Trigger a click event to initiate the download
+        //downloadLink3.click();
+
+        croppedImage.src = croppedDataURL;
+        resizedImage.src = resizedDataURL;
+        finalImage.src = finalDataURL;
+
+        // Make the images visible
+        croppedImage.style.display = 'inline';
+        resizedImage.style.display = 'inline';
+        finalImage.style.display = 'inline';
 
         try {
             // Load a pre-trained MNIST model
@@ -245,7 +412,7 @@ async function prepareImageForMNIST() {
             console.log('Model loaded successfully', model);
 
             // Remove the extra dimension from the input tensor
-            const inputImage = tf.browser.fromPixels(resizedCanvas, 1); // Convert image to tensor
+            const inputImage = tf.browser.fromPixels(finalCanvas, 1); // Convert image to tensor
             const reshapedInput = inputImage.div(255); // Normalize the tensor
             const finalInput = reshapedInput.squeeze().reshape([1, 28, 28]); // Reshape the tensor
 
@@ -258,16 +425,11 @@ async function prepareImageForMNIST() {
             // Display the predicted digit in the predictionContainer
             const predictionContainer = document.getElementById('predictionContainer');
             predictionContainer.textContent = `Predicted Digit: ${predictedDigit}`;
-
             // Trigger the download by simulating a click on the <a> element
-            downloadLink.click();
+            //downloadLink.click();
         } catch (error) {
             // Handle the error
             console.error('Error loading or predicting with the model:', error);
-        } finally {
-            // Remove the <a> element and revoke the Blob URL after download
-            document.body.removeChild(downloadLink);
-            URL.revokeObjectURL(blobURL);
         }
     } else {
         alert('Please enter a single letter in the input box.');

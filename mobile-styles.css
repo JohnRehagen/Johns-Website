@@ -264,7 +264,7 @@ ul {
     font-size: 14px;
 }
 
-.resume-block:hover .resume-element {
+.resume-block.touched .resume-element {
     color: #ececec;
     background-color: #00008B;
     transition: color 0.7s, background-color 0.7s;
@@ -274,6 +274,72 @@ ul {
     max-width: 100%; /* Make the image scale to the width of its container */
     height: auto; /* Maintain the aspect ratio */
 }
-.resume-block:not(:hover) .resume-element {
+.resume-block .resume-element {
     transition: color 0.7s, background-color 0.7s;
+}
+
+
+.scaled-image {
+    max-width: 100%; /* Make the image scale to the width of its container */
+    height: auto; /* Maintain the aspect ratio */
+}
+
+#canvas_div {
+    text-align: center;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+canvas {
+    margin-top: 40px;
+    margin-bottom: 20px;
+}
+
+#input_section{
+    margin-bottom: 10px;
+}
+
+#imageContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#imageContainer img {
+    margin: 10px; /* Add spacing between images */
+    width: 30%; /* Set a percentage-based width for the images */
+}
+
+#arrowImage {
+    width: 50px; /* Adjust the arrow image width */
+    height: auto; /* Automatically adjust height to maintain aspect ratio */
+    margin: 10px; /* Add spacing around the arrow image */
+}
+
+.button1 {
+    color: #36454F;
+    background-color: #ececec;
+    border: 1px solid #36454F;
+    border-radius: 10px;
+    font-size: 18px; /* Set font size to 12px */
+    font-family: 'TitilliumWeb-Bold', sans-serif;
+    margin-bottom: 10px;
+}
+
+.button1:hover {
+    color: #00008B;
+    background-color: #ececec; /* Change to the desired hover color */
+    border-color: #00008B;
+    transition: background-color 0.5s;
+    transform: border-color 0.5s;
+}
+
+.gif-container {
+    max-width: 100%; /* Make the container as wide as its parent */
+    overflow: hidden; /* Hide overflowing GIF parts */
+}
+
+/* Define the CSS for the GIF with the id "catanGIF" */
+#catanGIF {
+    width: 100%; /* Make the GIF as wide as its container */
 }

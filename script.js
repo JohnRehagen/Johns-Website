@@ -12,7 +12,7 @@ function executeCodeForSmallScreens() {
 
         // Set the margin-top of the content to the height of the sidebar
         const content = document.querySelector('.content');
-        content.style.marginTop = sidebarHeight + 'px';
+        content.style.marginTop = sidebarHeight +20+ 'px';
 
         // Select all elements with a specific class
         const elementsToHide = document.querySelectorAll('.Socials-section');
@@ -27,7 +27,7 @@ function executeCodeForSmallScreens() {
 // Function to execute code for larger screens
 function executeCodeForLargerScreens() {
     const viewportHeight = window.innerHeight;
-    const offsetPercentage = 20;
+    const offsetPercentage = 30;
     offset = (viewportHeight * offsetPercentage) / 100;
     console.log("Offset for larger screens:", offset);
 }
@@ -149,6 +149,42 @@ document.addEventListener("DOMContentLoaded", () => {
                 const targetOffset = targetSection.offsetTop - (viewportHeight * 0.19);
                 window.scrollTo({ top: targetOffset, behavior: "smooth" });
             }
+        });
+    });
+});
+
+const element = document.querySelector('.content a');
+    element.addEventListener('touchstart', function() {
+        // Handle the touch event (e.g., apply styles)
+        element.classList.add('hovered');
+    });
+    element.addEventListener('touchend', function() {
+        // Handle when the touch ends (e.g., remove styles)
+        element.classList.remove('hovered');
+    });
+
+const element1 = document.querySelector('.resume-block');
+    element.addEventListener('touchstart', function() {
+        // Handle the touch event (e.g., apply styles)
+        element1.classList.add('hovered');
+    });
+    element.addEventListener('touchend', function() {
+        // Handle when the touch ends (e.g., remove styles)
+        element1.classList.remove('hovered');
+    });
+
+document.addEventListener('DOMContentLoaded', function () {
+    const resumeBlocks = document.querySelectorAll('.resume-block');
+
+    resumeBlocks.forEach(function (block) {
+        block.addEventListener('touchstart', function () {
+            // Handle the touch event by adding the class
+            block.classList.add('touched');
+        });
+
+        block.addEventListener('touchend', function () {
+            // Handle when the touch event ends by removing the class
+            block.classList.remove('touched');
         });
     });
 });

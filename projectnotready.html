@@ -6,7 +6,33 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="styles2.css">
     <title>John Rehagen</title>
-    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs"></script>
+    <script>
+        // Load different CSS and scripts based on window width
+        if (window.innerWidth <= 768) {
+            var cssLink = document.createElement("link");
+            cssLink.href = "mobile-styles.css";
+            cssLink.rel = "stylesheet";
+            document.head.appendChild(cssLink);
+    
+            var scriptElement = document.createElement("script");
+            scriptElement.src = "mobile-scripts.js";
+            document.body.appendChild(scriptElement);
+    
+            // Apply styles to the .sidebar element
+            const sidebar = document.querySelector('.sidebar');
+            sidebar.style.fontSize = '24px';
+            sidebar.style.fontWeight = 'bold';
+        } else {
+            var cssLink = document.createElement("link");
+            cssLink.href = "desktop-styles.css";
+            cssLink.rel = "stylesheet";
+            document.head.appendChild(cssLink);
+    
+            var scriptElement = document.createElement("script");
+            scriptElement.src = "desktop-scripts.js";
+            document.body.appendChild(scriptElement);
+        }
+    </script>
 </head>
 <body>
     <div class="container">

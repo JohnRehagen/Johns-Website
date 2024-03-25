@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="mniststyles.css">
+    <link rel="stylesheet" href="desktop-styles.css">
     <title>John Rehagen</title>
     <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs"></script>
 </head>
@@ -42,13 +42,26 @@
                     </div>
                     <button class="button1" onclick="javascript:clearArea();return false;">Clear</button>
                     <button class="button1" onclick="javascript:prepareImageForMNIST();return false;">Predict Number</button>
-                    <div id="imageContainer"></div>
+
+                    <div id="imageContainer">
+                        <!-- Add an <img> element to display the cropped image -->
+                        <img id="croppedImage" style="display: none;" />
+
+                        <!-- Add an arrow image -->
+                        <img id="arrowImage" src="arrow.png" />
+
+                        <!-- Add an <img> element to display the resized image -->
+                        <img id="resizedImage" style="display: none;" />
+
+                        <!-- Add an arrow image -->
+                        <img id="arrowImage" src="arrow.png" />
+
+                        <!-- Add an <img> element to display the final image -->
+                        <img id="finalImage" style="display: none;" />
+                        
+                    </div>
                     <div id="predictionContainer">Predicted number: </div>
                 </div>
-            </div>
-
-            <div class="section" id = Projects>
-                <p>are neural networks deterministic?</p>
             </div>
         </div>
 
