@@ -2,6 +2,7 @@ import * as THREE from "three"
 import "./style.css"
 import { OrbitControls } from "three/examples/jsm/Addons.js"
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+//npm install @tweenjs/tween.jsimport { Tween } from '@tweenjs/tween.js';
 
 //Scene
 const scene = new THREE.Scene()
