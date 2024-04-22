@@ -188,3 +188,13 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 });
+
+function showHidden(element) {
+    var hiddenElement = element.querySelector('.hidden');
+    hiddenElement.style.display = 'block';
+}
+
+function hideHidden(element) {
+    var hiddenElement = element.querySelector('.hidden');
+    hiddenElement.style.display = 'none';
+}

@@ -338,3 +338,7 @@ canvas {
 #catanGIF {
     width: 100%; /* Make the GIF as wide as its container */
 }
+
+.hidden {
+    display: none;
+}

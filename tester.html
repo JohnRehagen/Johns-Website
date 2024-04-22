@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hover Effect</title>
+<style>
+    .hidden {
+        display: none;
+    }
+</style>
+</head>
+<body>
+
+<div class="parent" onmouseover="showHidden(this)" onmouseout="hideHidden(this)">
+    <div class="child">Hover over me</div>
+    <div class="hidden">Content to hide</div>
+</div>
+
+<script>
+    function showHidden(element) {
+        var hiddenElement = element.querySelector('.hidden');
+        hiddenElement.style.display = 'block';
+    }
+
+    function hideHidden(element) {
+        var hiddenElement = element.querySelector('.hidden');
+        hiddenElement.style.display = 'none';
+    }
+</script>
+
+</body>
+</html>

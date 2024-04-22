@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pi Digit Typing Test</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+    }
+
+    h1 {
+      color: #333;
+    }
+
+    #pi-display {
+      font-size: 24px;
+      margin-bottom: 20px;
+    }
+
+    #user-input {
+      padding: 10px;
+      margin-bottom: 10px;
+      font-size: 18px;
+      text-align: center;
+    }
+
+    button {
+      padding: 10px 20px;
+      background-color: #007bff;
+      color: #fff;
+      border: none;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #0056b3;
+    }
+  </style>
+</head>
+<body>
+  <h1>Pi Digit Typing Test</h1>
+  <div id="pi-display"></div>
+  <input type="text" id="user-input" placeholder="Start typing...">
+  <button id="reset-btn">Reset</button>
+
+  <script>
+    const piDigits = "3.14159265358979323846264338327950288419716939937510";
+
+    const piDisplay = document.getElementById("pi-display");
+    const userInput = document.getElementById("user-input");
+    const resetBtn = document.getElementById("reset-btn");
+
+    let currentDigitIndex = 0;
+
+    // Display the current digit of pi above the input box
+    function displayCurrentDigit() {
+      piDisplay.textContent = piDigits.slice(0, currentDigitIndex);
+    }
+
+    // Check if user input matches the current digit of pi
+    function checkInput() {
+      const userInputValue = userInput.value.trim();
+      const currentPiDigit = piDigits[currentDigitIndex];
+
+      if (userInputValue === currentPiDigit) {
+        currentDigitIndex++;
+        displayCurrentDigit();
+        userInput.value = "";
+      } else if (userInputValue !== "") {
+        alert("Incorrect digit! Try again.");
+        userInput.value = "";
+      }
+    }
+
+    // Reset the game
+    function resetGame() {
+      currentDigitIndex = 0;
+      displayCurrentDigit();
+      userInput.value = "";
+    }
+
+    // Event listeners
+    userInput.addEventListener("input", checkInput);
+    resetBtn.addEventListener("click", resetGame);
+
+    // Initial display
+    displayCurrentDigit();
+  </script>
+</body>
+</html>
