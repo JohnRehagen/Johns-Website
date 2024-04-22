@@ -1,16 +1,66 @@
 import * as THREE from "three"
 import "./style.css"
 import { OrbitControls } from "three/examples/jsm/Addons.js"
+import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+
 //Scene
 const scene = new THREE.Scene()
 
-//Create our sphere
-const geometry = new THREE.SphereGeometry(3,64,64)
-const material = new THREE.MeshStandardMaterial({
-  color: '#00ff83',
-})
-const mesh = new THREE.Mesh(geometry, material)
-scene.add(mesh)
+const groundGeometry = new THREE.PlaneGeometry(20, 20, 32, 32);
+groundGeometry.rotateX(-Math.PI / 2);
+const groundMaterial = new THREE.MeshStandardMaterial({
+  color: 0x555555,
+  side: THREE.DoubleSide
+});
+const groundMesh = new THREE.Mesh(groundGeometry, groundMaterial);
+groundMesh.castShadow = false;
+groundMesh.receiveShadow = true;
+scene.add(groundMesh);
+
+const spotLight = new THREE.SpotLight(0xffffff, 3000, 100, 0.22, 1);
+spotLight.position.set(0, 25, 0);
+spotLight.castShadow = true;
+spotLight.shadow.bias = -0.0001;
+scene.add(spotLight);
+
+//light
+const light = new THREE.PointLight(0xffffff, 70)
+light.position.set(0,0,0) //x,y,z
+scene.add(light)
+
+//light2
+const light2 = new THREE.PointLight(0xffffff, 70)
+light.position.set(-1.65,4.07,-6) //x,y,z
+scene.add(light2)
+
+//light2
+const light3 = new THREE.PointLight(0xffffff, 70)
+light.position.set(-1.65,4.07,0) //x,y,z
+scene.add(light3)
+
+// Load GLB File
+const loader = new GLTFLoader();
+
+loader.load('https://s3.us-east-2.amazonaws.com/www.johnrehagen.com/Scaniverse+2024-04-10+220614.glb', (gltf) => {
+  console.log('loading model');
+  const mesh = gltf.scene;
+
+  mesh.traverse((child) => {
+    if (child.isMesh) {
+      child.castShadow = true;
+      child.receiveShadow = true;
+    }
+  });
+
+  mesh.position.set(0, 1.05, -1);
+  scene.add(mesh);
+
+  document.getElementById('progress-container').style.display = 'none';
+}, (xhr) => {
+  console.log(`loading ${xhr.loaded / xhr.total * 100}%`);
+}, (error) => {
+  console.error(error);
+});
 
 //sizes - get viewport size
 const sizes = {
@@ -18,16 +68,11 @@ const sizes = {
   height: window.innerHeight
 }
 
-//light
-const light = new THREE.PointLight(0xffffff, 70, 100, 1.7)
-light.position.set(0,10,10) //x,y,z
-scene.add(light)
-
-
 //Camera
 const camera = new THREE.PerspectiveCamera(50,sizes.width/sizes.height,0.1,100)
-camera.position.z = 20
+camera.position.set(4, 5, 11);
 scene.add(camera)
+
 
 //Renderer
 const canvas = document.querySelector('.webgl')
@@ -51,13 +96,79 @@ window.addEventListener("resize", () => {
 
 //Controls
 const controls = new OrbitControls(camera,canvas)
-controls.enableDamping = true;
 controls.enablePan = true;
-controls.enablezoom = true;
+//controls.minDistance = 5;
+//controls.maxDistance = 20;
+//controls.minPolarAngle = 0.5;
+//controls.maxPolarAngle = 1.5;
+//controls.autoRotate = false;
+controls.target = new THREE.Vector3(0, 1, 0);
 
+// Create a div element to display camera position
+var positionDiv = document.createElement('div');
+positionDiv.style.position = 'absolute';
+positionDiv.style.top = '10px';
+positionDiv.style.left = '10px';
+positionDiv.style.color = 'white';
+document.body.appendChild(positionDiv);
+
+var vector = new THREE.Vector3(); // create once and reuse it!
+
+console.log(camera.getWorldDirection( vector ));
+
+// Function to update camera position display
+function updateCameraPosition() {
+  const cameraDirection = camera.getWorldDirection( vector )
+  positionDiv.innerHTML = 'Camera Position: x: ' + camera.position.x.toFixed(2) +
+                           ', y: ' + camera.position.y.toFixed(2) +
+                           ', z: ' + camera.position.z.toFixed(2) +
+                           ' Camera Direction: x ' + cameraDirection.x.toFixed(2) + 
+                           ', y: ' + cameraDirection.y.toFixed(2) +
+                           ', z: ' + cameraDirection.z.toFixed(2);
+}
+
+
+//constant loop
 const loop = () => {
   renderer.render(scene,camera)
   window.requestAnimationFrame(loop)
   controls.update
+  updateCameraPosition()
 }
 loop()
+
+
+//****************BOTTOM MENU*************
+
+const bottomMenu = document.querySelector('.bottom-menu');
+const menuHeader = document.querySelector('.menu-header');
+const menuButtonsContainer = document.getElementById('menu-buttons-container');
+
+let isExpanded = false;
+
+fetch('routes.json')
+  .then(response => response.json())
+  .then(data => {
+    // Populate the menu buttons
+    data.menuItems.forEach(item => {
+      const menuButton = document.createElement('button');
+      menuButton.textContent = item.title;
+      menuButton.addEventListener('click', () => {
+        const { x, y, z } = item.cameraPosition;
+        const { x: dirX, y: dirY, z: dirZ } = item.cameraDirection;
+
+        camera.position.set(x, y, z);
+
+        const direction = new THREE.Vector3(dirX, dirY, dirZ);
+        camera.lookAt(direction.add(camera.position));
+      });
+      menuButtonsContainer.appendChild(menuButton);
+    });
+  })
+  .catch(error => console.error('Error fetching menu data:', error));
+
+//animate the bottom menu
+menuHeader.addEventListener('click', () => {
+  isExpanded = !isExpanded;
+  bottomMenu.style.height = isExpanded ? '70%' : '10%';
+});

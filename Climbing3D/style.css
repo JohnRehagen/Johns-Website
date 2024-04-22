@@ -3,3 +3,50 @@
   padding: 0;
   box-sizing: border-box;
 }
+
+body,html{
+  overflow-x: hidden;
+}
+
+body, html {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  overflow: hidden;
+}
+
+header {
+  height: 10%;
+  background-color: #333;
+  color: white;
+  text-align: center;
+  line-height: 100px;
+}
+
+.canvas-container {
+  height: 80%;
+  position: relative;
+}
+
+.bottom-menu {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 10%;
+  background-color: #333;
+  color: #fff;
+  transition: height 0.3s ease-in-out;
+  overflow: hidden;
+}
+
+.menu-header {
+  padding: 10px;
+  cursor: pointer;
+}
+
+.menu-content {
+  padding: 10px;
+  height: 70%;
+  overflow-y: auto;
+}
