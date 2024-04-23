@@ -14,12 +14,35 @@
         <canvas class="webgl"></canvas>
     </div>
 
-    <div class="bottom-menu">
-        <div class="menu-header">Menu</div>
-        <div class="menu-content">
-            <div id="menu-buttons-container"></div>
+    <nav class="bottom-menu">
+        <button class="menu-button" id="helpButton">
+            <!--<img src="help-icon.png" alt="Help">-->
+          <span>Help</span>
+        </button>
+        <button class="menu-button" id="routesButton">
+          <!--<img src="routes-icon.png" alt="Routes">-->
+          <span>Routes</span>
+        </button>
+      </nav>
+    
+      <div class="help-overlay" id="helpOverlay">
+        <div class="help-content">
+          <button class="close-button" id="closeButton">&times;</button>
+          <h2>Help</h2>
+          <p>This is a description of how to use the app.</p>
+          <!-- Add more help content here -->
         </div>
-    </div>
+      </div>
+
+      <div class="routes-overlay" id="routesOverlay">
+        <div class="routes-content">
+          <div class="routes-header">
+            <h2>Routes</h2>
+            <button class="close-button" id="closeRoutesButton">&times;</button>
+          </div>
+          <div class="menu-buttons-container" id="menuButtonsContainer"></div>
+        </div>
+      </div>
 
     <script type = "module" src="/main.js"></script>
 

@@ -130,12 +130,118 @@ function updateCameraPosition() {
 }
 
 //****************BOTTOM MENU*************
+const helpButton = document.getElementById('helpButton');
+const routesButton = document.getElementById('routesButton');
+const helpOverlay = document.getElementById('helpOverlay');
+const closeButton = document.getElementById('closeButton');
+const routesOverlay = document.getElementById('routesOverlay');
+const menuButtonsContainer = document.getElementById('menuButtonsContainer');
+const closeRoutesButton = document.getElementById('closeRoutesButton');
 
-const bottomMenu = document.querySelector('.bottom-menu');
-const menuHeader = document.querySelector('.menu-header');
-const menuButtonsContainer = document.getElementById('menu-buttons-container');
+helpButton.addEventListener('click', () => {
+  helpOverlay.style.display = 'flex';
+  console.log("help menu opened")
+});
 
-let isExpanded = false;
+closeButton.addEventListener('click', () => {
+  helpOverlay.style.display = 'none';
+  console.log("help menu closed")
+});
+
+routesButton.addEventListener('click', () => {
+  showRoutesMenu();
+  console.log("routes menu opened")
+});
+
+function showRoutesMenu() {
+  const routesContent = document.querySelector('.routes-content');
+  routesContent.classList.add('open');
+  routesOverlay.style.display = 'flex';
+  routesOverlay.style.bottom = '0';
+  fetch('routes.json')
+    .then(response => response.json())
+    .then(data => {
+      menuButtonsContainer.innerHTML = ''; // Clear existing buttons
+      const buttonCount = data.menuItems.length;
+      menuButtonsContainer.style.setProperty('--button-count', buttonCount);
+      data.menuItems.forEach(item => {
+        const menuButton = document.createElement('button');
+        menuButton.textContent = item.title;
+        menuButton.addEventListener('click', () => {
+          const { x, y, z } = item.cameraPosition;
+          const { x: dirX, y: dirY, z: dirZ } = item.cameraDirection;
+          animateCamera(new THREE.Vector3(x, y, z), new THREE.Vector3(dirX, dirY, dirZ), 750);
+        });
+        menuButtonsContainer.appendChild(menuButton);
+      });
+    })
+    .catch(error => console.error('Error fetching menu data:', error));
+
+  routesOverlay.addEventListener('touchstart', handleTouchStart, { passive: true });
+  routesOverlay.addEventListener('touchmove', handleTouchMove, { passive: false });
+  routesOverlay.addEventListener('touchend', handleTouchEnd);
+
+  closeRoutesButton.addEventListener('click', hideRoutesMenu);
+}
+
+function hideRoutesMenu() {
+  const routesContent = document.querySelector('.routes-content');
+  const routesOverlay = document.getElementById('routesOverlay');
+
+  routesContent.classList.remove('open');
+  routesOverlay.style.display = 'none';
+}
+
+let isDragging = false;
+let startY;
+
+function handleTouchStart(e) {
+  if (e.target === routesOverlay) {
+    isDragging = true;
+    startY = e.touches[0].pageY;
+  }
+}
+
+function handleTouchMove(e) {
+  if (isDragging && Math.abs(e.touches[0].pageY - startY) > 50) {
+    e.preventDefault();
+    const currentY = e.touches[0].pageY;
+    const offsetY = currentY - startY;
+    const maxOffset = window.innerHeight * 0.7;
+    const clampedOffset = Math.max(Math.min(offsetY, maxOffset), 0);
+    routesOverlay.style.bottom = `calc(-70% + ${clampedOffset}px)`;
+  }
+}
+
+function handleTouchEnd() {
+  isDragging = false;
+  const currentBottom = parseInt(routesOverlay.style.bottom, 10);
+  if (currentBottom < -(window.innerHeight * 0.3)) {
+    // Close the routes menu
+    hideRoutesMenu();
+  } else {
+    // Slide the routes menu back to the bottom
+    routesOverlay.style.bottom = '0';
+  }
+}
+
+fetch('routes.json')
+    .then(response => response.json())
+    .then(data => {
+      menuButtonsContainer.innerHTML = ''; // Clear existing buttons
+      data.menuItems.forEach(item => {
+        const menuButton = document.createElement('button');
+        menuButton.textContent = item.title;
+        menuButton.addEventListener('click', () => {
+          const { x, y, z } = item.cameraPosition;
+          const { x: dirX, y: dirY, z: dirZ } = item.cameraDirection;
+          animateCamera(new THREE.Vector3(x, y, z), new THREE.Vector3(dirX, dirY, dirZ), 750);
+          hideRoutesMenu();
+        });
+        menuButtonsContainer.appendChild(menuButton);
+      });
+    })
+    .catch(error => console.error('Error fetching menu data:', error));
 
 function animateCamera( targetPosition, targetDirection, duration )
 {
@@ -154,32 +260,7 @@ function animateCamera( targetPosition, targetDirection, duration )
 			.start( );
 }
 
-fetch('routes.json')
-  .then(response => response.json())
-  .then(data => {
-    // Populate the menu buttons
-    data.menuItems.forEach(item => {
-      const menuButton = document.createElement('button');
-      menuButton.textContent = item.title;
-      menuButton.addEventListener('click', () => {
-        const { x, y, z } = item.cameraPosition;
-        const { x: dirX, y: dirY, z: dirZ } = item.cameraDirection;
-
-        animateCamera(new THREE.Vector3(x,y,z), new THREE.Vector3(dirX,dirY,dirZ),750)
-      });
-      menuButtonsContainer.appendChild(menuButton);
-    });
-  })
-  .catch(error => console.error('Error fetching menu data:', error));
-
-//animate the bottom menu
-menuHeader.addEventListener('click', () => {
-  isExpanded = !isExpanded;
-  bottomMenu.style.height = isExpanded ? '70%' : '10%';
-});
-
 //*******Constant loop ***************
-
 
 //constant loop
 const loop = () => {
