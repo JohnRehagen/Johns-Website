@@ -2,7 +2,7 @@ import * as THREE from "three"
 import "./style.css"
 import { OrbitControls } from "three/examples/jsm/Addons.js"
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
-//npm install @tweenjs/tween.jsimport { Tween } from '@tweenjs/tween.js';
+import TWEEN from '@tweenjs/tween.js';
 
 //Scene
 const scene = new THREE.Scene()
@@ -26,18 +26,21 @@ scene.add(spotLight);
 
 //light
 const light = new THREE.PointLight(0xffffff, 70)
-light.position.set(0,0,0) //x,y,z
+light.position.set(0,-1,-0.5) //x,y,z
 scene.add(light)
 
 //light2
 const light2 = new THREE.PointLight(0xffffff, 70)
-light.position.set(-1.65,4.07,-6) //x,y,z
+light.position.set(-1.65,4.07,4) //x,y,z
 scene.add(light2)
 
 //light2
 const light3 = new THREE.PointLight(0xffffff, 70)
 light.position.set(-1.65,4.07,0) //x,y,z
 scene.add(light3)
+
+const light4 = new THREE.AmbientLight( 0x404040 ); // soft white light
+scene.add( light4 )
 
 // Load GLB File
 const loader = new GLTFLoader();
@@ -71,9 +74,8 @@ const sizes = {
 
 //Camera
 const camera = new THREE.PerspectiveCamera(50,sizes.width/sizes.height,0.1,100)
-camera.position.set(4, 5, 11);
+camera.position.set(13, 5.4, -1);
 scene.add(camera)
-
 
 //Renderer
 const canvas = document.querySelector('.webgl')
@@ -103,7 +105,7 @@ controls.enablePan = true;
 //controls.minPolarAngle = 0.5;
 //controls.maxPolarAngle = 1.5;
 //controls.autoRotate = false;
-controls.target = new THREE.Vector3(0, 1, 0);
+//controls.target = new THREE.Vector3(0, 1, 0);
 
 // Create a div element to display camera position
 var positionDiv = document.createElement('div');
@@ -114,8 +116,7 @@ positionDiv.style.color = 'white';
 document.body.appendChild(positionDiv);
 
 var vector = new THREE.Vector3(); // create once and reuse it!
-
-console.log(camera.getWorldDirection( vector ));
+//console.log(camera.getWorldDirection( vector ));
 
 // Function to update camera position display
 function updateCameraPosition() {
@@ -128,17 +129,6 @@ function updateCameraPosition() {
                            ', z: ' + cameraDirection.z.toFixed(2);
 }
 
-
-//constant loop
-const loop = () => {
-  renderer.render(scene,camera)
-  window.requestAnimationFrame(loop)
-  controls.update
-  updateCameraPosition()
-}
-loop()
-
-
 //****************BOTTOM MENU*************
 
 const bottomMenu = document.querySelector('.bottom-menu');
@@ -146,6 +136,23 @@ const menuHeader = document.querySelector('.menu-header');
 const menuButtonsContainer = document.getElementById('menu-buttons-container');
 
 let isExpanded = false;
+
+function animateCamera( targetPosition, targetDirection, duration )
+{
+		new TWEEN.Tween( camera.position )
+			.to( targetPosition, duration )
+			.easing( TWEEN.Easing.Sinusoidal.InOut )
+			.start( );
+	
+		new TWEEN.Tween( camera.getWorldDirection( new THREE.Vector3 ) )
+			.to( targetDirection, duration )
+			.easing( TWEEN.Easing.Sinusoidal.InOut )
+			.onUpdate( (direction)=>{
+					direction.add( camera.position );
+					camera.lookAt( direction );
+			} )
+			.start( );
+}
 
 fetch('routes.json')
   .then(response => response.json())
@@ -158,10 +165,7 @@ fetch('routes.json')
         const { x, y, z } = item.cameraPosition;
         const { x: dirX, y: dirY, z: dirZ } = item.cameraDirection;
 
-        camera.position.set(x, y, z);
-
-        const direction = new THREE.Vector3(dirX, dirY, dirZ);
-        camera.lookAt(direction.add(camera.position));
+        animateCamera(new THREE.Vector3(x,y,z), new THREE.Vector3(dirX,dirY,dirZ),750)
       });
       menuButtonsContainer.appendChild(menuButton);
     });
@@ -173,3 +177,16 @@ menuHeader.addEventListener('click', () => {
   isExpanded = !isExpanded;
   bottomMenu.style.height = isExpanded ? '70%' : '10%';
 });
+
+//*******Constant loop ***************
+
+
+//constant loop
+const loop = () => {
+  renderer.render(scene,camera)
+  window.requestAnimationFrame(loop)
+  controls.update
+  updateCameraPosition()
+  TWEEN.update( );
+}
+loop()
