@@ -11,3 +11,7 @@ npm install @tweenjs/tween.js
 [loading 3D models](https://threejs.org/docs/#manual/en/introduction/Loading-3D-models)
 
 https://discourse.threejs.org/t/orbitcontrols-moves-on-1st-mouse-after-setting-camera-information/64330/3
+
+https://www.reddit.com/r/godot/comments/14gt180/all_possible_tweening_transition_types_and_easing/ 
+
+https://discourse.threejs.org/t/issue-animating-camera-direction-via-tween-js/64468/2
