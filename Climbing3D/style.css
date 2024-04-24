@@ -70,27 +70,25 @@ header {
   z-index: 9999;
 }
 
-.help-content,
-.routes-content {
+.help-content {
   background-color: #fff;
   padding: 20px;
   border-radius: 5px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
   position: relative;
-  max-width: 600px;
   max-height: 80%;
   overflow: auto;
 }
 
 .routes-content {
-  height: 70%;
-  position: fixed;
+  background-color: #fff;
+  padding: 0px;
+  max-height: 50%;
+  overflow: auto;
+  height: 50%;
+  position: center;
   bottom: 0;
   left: 0;
   width: 100%;
-  border-radius: 20px 20px 0 0;
-  transform: translateY(100%);
-  transition: transform 0.3s ease-in-out;
 }
 
 .routes-content.open {
@@ -127,7 +125,6 @@ header {
   margin-bottom: 10px;
   background-color: #f1f1f1;
   border: 2px solid black;
-  border-radius: calc(0.5 * (100% / var(--button-count))); /* Adjust the height value as needed */
   cursor: pointer;
   font-size: 16px;
 }

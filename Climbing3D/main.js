@@ -7,40 +7,9 @@ import TWEEN from '@tweenjs/tween.js';
 //Scene
 const scene = new THREE.Scene()
 
-const groundGeometry = new THREE.PlaneGeometry(20, 20, 32, 32);
-groundGeometry.rotateX(-Math.PI / 2);
-const groundMaterial = new THREE.MeshStandardMaterial({
-  color: 0x555555,
-  side: THREE.DoubleSide
-});
-const groundMesh = new THREE.Mesh(groundGeometry, groundMaterial);
-groundMesh.castShadow = false;
-groundMesh.receiveShadow = true;
-scene.add(groundMesh);
-
-const spotLight = new THREE.SpotLight(0xffffff, 3000, 100, 0.22, 1);
-spotLight.position.set(0, 25, 0);
-spotLight.castShadow = true;
-spotLight.shadow.bias = -0.0001;
-scene.add(spotLight);
-
-//light
-const light = new THREE.PointLight(0xffffff, 70)
-light.position.set(0,-1,-0.5) //x,y,z
-scene.add(light)
-
-//light2
-const light2 = new THREE.PointLight(0xffffff, 70)
-light.position.set(-1.65,4.07,4) //x,y,z
-scene.add(light2)
-
-//light2
-const light3 = new THREE.PointLight(0xffffff, 70)
-light.position.set(-1.65,4.07,0) //x,y,z
-scene.add(light3)
-
-const light4 = new THREE.AmbientLight( 0x404040 ); // soft white light
-scene.add( light4 )
+const light = new THREE.AmbientLight( 0xffffff ); // soft white light
+light.intensity = 2.5;
+scene.add( light );
 
 // Load GLB File
 const loader = new GLTFLoader();
@@ -56,7 +25,7 @@ loader.load('https://s3.us-east-2.amazonaws.com/www.johnrehagen.com/Scaniverse+2
     }
   });
 
-  mesh.position.set(0, 1.05, -1);
+  mesh.position.set(0, 0,0);
   scene.add(mesh);
 
   document.getElementById('progress-container').style.display = 'none';
@@ -74,7 +43,7 @@ const sizes = {
 
 //Camera
 const camera = new THREE.PerspectiveCamera(50,sizes.width/sizes.height,0.1,100)
-camera.position.set(13, 5.4, -1);
+camera.position.set(10.98, 4.43, 0);
 scene.add(camera)
 
 //Renderer
@@ -100,12 +69,7 @@ window.addEventListener("resize", () => {
 //Controls
 const controls = new OrbitControls(camera,canvas)
 controls.enablePan = true;
-//controls.minDistance = 5;
-//controls.maxDistance = 20;
-//controls.minPolarAngle = 0.5;
-//controls.maxPolarAngle = 1.5;
-//controls.autoRotate = false;
-//controls.target = new THREE.Vector3(0, 1, 0);
+//controls.target.set(new THREE.Vector3(0, 0, 0));
 
 // Create a div element to display camera position
 var positionDiv = document.createElement('div');
@@ -158,25 +122,6 @@ function showRoutesMenu() {
   routesContent.classList.add('open');
   routesOverlay.style.display = 'flex';
   routesOverlay.style.bottom = '0';
-  fetch('routes.json')
-    .then(response => response.json())
-    .then(data => {
-      menuButtonsContainer.innerHTML = ''; // Clear existing buttons
-      const buttonCount = data.menuItems.length;
-      menuButtonsContainer.style.setProperty('--button-count', buttonCount);
-      data.menuItems.forEach(item => {
-        const menuButton = document.createElement('button');
-        menuButton.textContent = item.title;
-        menuButton.addEventListener('click', () => {
-          const { x, y, z } = item.cameraPosition;
-          const { x: dirX, y: dirY, z: dirZ } = item.cameraDirection;
-          animateCamera(new THREE.Vector3(x, y, z), new THREE.Vector3(dirX, dirY, dirZ), 750);
-        });
-        menuButtonsContainer.appendChild(menuButton);
-      });
-    })
-    .catch(error => console.error('Error fetching menu data:', error));
-
   routesOverlay.addEventListener('touchstart', handleTouchStart, { passive: true });
   routesOverlay.addEventListener('touchmove', handleTouchMove, { passive: false });
   routesOverlay.addEventListener('touchend', handleTouchEnd);
@@ -259,7 +204,6 @@ function animateCamera( targetPosition, targetDirection, duration )
 			} )
 			.start( );
 }
-
 //*******Constant loop ***************
 
 //constant loop
