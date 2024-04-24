@@ -128,3 +128,31 @@ header {
   cursor: pointer;
   font-size: 16px;
 }
+
+.route-button {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem; /* Adjust the value as needed */
+}
+
+.route-button > * {
+  margin-right: 0.5rem; /* Adjust the value as needed */
+}
+
+.route-button > *:last-child {
+  margin-right: 0; /* Remove the margin from the last child */
+}
+
+.loading-percentage {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 24px;
+  font-weight: bold;
+  color: white;
+  background-color: rgba(0, 0, 0, 0.7);
+  padding: 10px 20px;
+  border-radius: 5px;
+  display: none; /* initially hidden */
+}

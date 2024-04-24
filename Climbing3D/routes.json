@@ -1,19 +1,55 @@
 {
-    "menuItems": [
-      {
-        "title": "Route 1",
-        "cameraPosition": {"x": 2.74,"y": 3.22,"z": -2.87},
-        "cameraDirection": {"x": -0.5,"y": -0.17,"z": 0.85}
+  "menuItems": [
+    {
+      "title": "Route 1",
+      "vGrade": "V5",
+      "location": "Left Wall",
+      "setter": "John Doe",
+      "feedbackFormLink": "https://example.com/route1-feedback",
+      "cameraPosition": {
+        "x": 2.74,
+        "y": 3.22,
+        "z": -2.87
       },
-      {
-        "title": "Route 2",
-        "cameraPosition": {"x": 1.82,"y": 3.42,"z": 1.67},
-        "cameraDirection": {"x": -0.08,"y": -0.19,"z": -0.98}
-      },
-      {
-        "title": "Route 3",
-        "cameraPosition": {"x": 2.58, "y": 3.27, "z": 0.16},
-        "cameraDirection": {"x": -0.85,"y": -0.09,"z": -0.51}
+      "cameraDirection": {
+        "x": -0.5,
+        "y": -0.17,
+        "z": 0.85
       }
-    ]
-  }
+    },
+    {
+      "title": "Route 2",
+      "vGrade": "V6",
+      "location": "Center Wall",
+      "setter": "Jane Smith",
+      "feedbackFormLink": "https://example.com/route2-feedback",
+      "cameraPosition": {
+        "x": 1.82,
+        "y": 3.42,
+        "z": 1.67
+      },
+      "cameraDirection": {
+        "x": -0.08,
+        "y": -0.19,
+        "z": -0.98
+      }
+    },
+    {
+      "title": "Route 3",
+      "vGrade": "V4",
+      "location": "Right Wall",
+      "setter": "Bob Johnson",
+      "feedbackFormLink": "https://example.com/route3-feedback",
+      "cameraPosition": {
+        "x": 2.58,
+        "y": 3.27,
+        "z": 0.16
+      },
+      "cameraDirection": {
+        "x": -0.85,
+        "y": -0.09,
+        "z": -0.51
+      }
+    }
+  ]
+}

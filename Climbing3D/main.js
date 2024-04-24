@@ -13,7 +13,39 @@ scene.add( light );
 
 // Load GLB File
 const loader = new GLTFLoader();
+loader.load('https://s3.us-east-2.amazonaws.com/www.johnrehagen.com/Scaniverse+2024-04-10+220614.glb', 
+    (gltf) => {
+        console.log('loading model');
+        const mesh = gltf.scene;
 
+        mesh.traverse((child) => {
+            if (child.isMesh) {
+                child.castShadow = true;
+                child.receiveShadow = true;
+            }
+        });
+
+        mesh.position.set(0, 0, 0);
+        scene.add(mesh);
+
+        // Hide the loading percentage when loading is complete
+        document.getElementById('loadingPercentage').style.display = 'none';
+    }, 
+    (xhr) => {
+        // Calculate loading progress percentage
+        const percentage = (xhr.loaded / xhr.total * 100).toFixed(2);
+        
+        // Display loading percentage
+        document.getElementById('loadingPercentage').innerText = `Loading... ${percentage}%`;
+        document.getElementById('loadingPercentage').style.display = 'block';
+    }, 
+    (error) => {
+        console.error(error);
+        // Hide the loading percentage if an error occurs
+        document.getElementById('loadingPercentage').style.display = 'none';
+    }
+);
+/*
 loader.load('https://s3.us-east-2.amazonaws.com/www.johnrehagen.com/Scaniverse+2024-04-10+220614.glb', (gltf) => {
   console.log('loading model');
   const mesh = gltf.scene;
@@ -34,6 +66,7 @@ loader.load('https://s3.us-east-2.amazonaws.com/www.johnrehagen.com/Scaniverse+2
 }, (error) => {
   console.error(error);
 });
+*/
 
 //sizes - get viewport size
 const sizes = {
@@ -171,22 +204,47 @@ function handleTouchEnd() {
 }
 
 fetch('routes.json')
-    .then(response => response.json())
-    .then(data => {
-      menuButtonsContainer.innerHTML = ''; // Clear existing buttons
-      data.menuItems.forEach(item => {
-        const menuButton = document.createElement('button');
-        menuButton.textContent = item.title;
-        menuButton.addEventListener('click', () => {
-          const { x, y, z } = item.cameraPosition;
-          const { x: dirX, y: dirY, z: dirZ } = item.cameraDirection;
-          animateCamera(new THREE.Vector3(x, y, z), new THREE.Vector3(dirX, dirY, dirZ), 750);
-          hideRoutesMenu();
-        });
-        menuButtonsContainer.appendChild(menuButton);
+  .then(response => response.json())
+  .then(data => {
+    menuButtonsContainer.innerHTML = ''; // Clear existing buttons
+
+    data.menuItems.forEach(item => {
+      const menuButton = document.createElement('div');
+      menuButton.classList.add('route-button');
+
+      const vGrade = document.createElement('span');
+      vGrade.textContent = item.vGrade;
+      menuButton.appendChild(vGrade);
+
+      const title = document.createElement('span');
+      title.textContent = item.title;
+      menuButton.appendChild(title);
+
+      const setter = document.createElement('span');
+      setter.textContent = item.setter;
+      menuButton.appendChild(setter);
+
+      const location = document.createElement('span');
+      location.textContent = item.location;
+      menuButton.appendChild(location);
+
+      const feedbackLink = document.createElement('a');
+      feedbackLink.href = item.feedbackFormLink;
+      feedbackLink.target = '_blank';
+      feedbackLink.textContent = 'Feedback';
+      menuButton.appendChild(feedbackLink);
+
+      menuButton.addEventListener('click', () => {
+        const { x, y, z } = item.cameraPosition;
+        const { x: dirX, y: dirY, z: dirZ } = item.cameraDirection;
+        animateCamera(new THREE.Vector3(x, y, z), new THREE.Vector3(dirX, dirY, dirZ), 750);
+        hideRoutesMenu();
       });
-    })
-    .catch(error => console.error('Error fetching menu data:', error));
+
+      menuButtonsContainer.appendChild(menuButton);
+    });
+  })
+  .catch(error => console.error('Error fetching menu data:', error));
 
 function animateCamera( targetPosition, targetDirection, duration )
 {
@@ -201,6 +259,8 @@ function animateCamera( targetPosition, targetDirection, duration )
 			.onUpdate( (direction)=>{
 					direction.add( camera.position );
 					camera.lookAt( direction );
+          controls.target.set(0,0,-controls.target.distanceTo(camera.position)).applyQuaternion(camera.quaternion).add(camera.position)
+          controls.update();
 			} )
 			.start( );
 }
