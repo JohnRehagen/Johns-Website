@@ -1,54 +1,57 @@
 {
   "menuItems": [
     {
-      "title": "Route 1",
+      "title": "Route 1 Name",
       "vGrade": "V5",
       "location": "Left Wall",
-      "setter": "John Doe",
+      "setter": "John Rehagen",
+      "holdColor":"Yellow",
       "feedbackFormLink": "https://example.com/route1-feedback",
       "cameraPosition": {
-        "x": 2.74,
-        "y": 3.22,
-        "z": -2.87
+        "x": 3.74,
+        "y": 2.6,
+        "z": -1.78
       },
       "cameraDirection": {
-        "x": -0.5,
-        "y": -0.17,
-        "z": 0.85
+        "x": -0.44,
+        "y": -0.24,
+        "z": 0.86
       }
     },
     {
-      "title": "Route 2",
+      "title": "Route 2 Name",
       "vGrade": "V6",
       "location": "Center Wall",
-      "setter": "Jane Smith",
+      "setter": "Roee Belkin",
+      "holdColor":"Yellow",
       "feedbackFormLink": "https://example.com/route2-feedback",
       "cameraPosition": {
-        "x": 1.82,
-        "y": 3.42,
-        "z": 1.67
+        "x": 2.55,
+        "y": 1.90,
+        "z": -1.6
       },
       "cameraDirection": {
-        "x": -0.08,
-        "y": -0.19,
-        "z": -0.98
+        "x": -0.9,
+        "y": -0.01,
+        "z": 0.44
       }
     },
     {
-      "title": "Route 3",
+      "title": "Route 3 Name",
       "vGrade": "V4",
       "location": "Right Wall",
-      "setter": "Bob Johnson",
+      "setter": "Nic Hernandez",
+      "holdColor":"Blue",
       "feedbackFormLink": "https://example.com/route3-feedback",
       "cameraPosition": {
-        "x": 2.58,
-        "y": 3.27,
-        "z": 0.16
+        "x": 2.88,
+        "y": 2.45,
+        "z": 1.79
       },
       "cameraDirection": {
-        "x": -0.85,
-        "y": -0.09,
-        "z": -0.51
+        "x": -0.35,
+        "y": -0.15,
+        "z": -0.93
       }
     }
   ]

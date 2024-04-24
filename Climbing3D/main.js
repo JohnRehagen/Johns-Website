@@ -45,28 +45,6 @@ loader.load('https://s3.us-east-2.amazonaws.com/www.johnrehagen.com/Scaniverse+2
         document.getElementById('loadingPercentage').style.display = 'none';
     }
 );
-/*
-loader.load('https://s3.us-east-2.amazonaws.com/www.johnrehagen.com/Scaniverse+2024-04-10+220614.glb', (gltf) => {
-  console.log('loading model');
-  const mesh = gltf.scene;
-
-  mesh.traverse((child) => {
-    if (child.isMesh) {
-      child.castShadow = true;
-      child.receiveShadow = true;
-    }
-  });
-
-  mesh.position.set(0, 0,0);
-  scene.add(mesh);
-
-  document.getElementById('progress-container').style.display = 'none';
-}, (xhr) => {
-  console.log(`loading ${xhr.loaded / xhr.total * 100}%`);
-}, (error) => {
-  console.error(error);
-});
-*/
 
 //sizes - get viewport size
 const sizes = {
@@ -219,6 +197,10 @@ fetch('routes.json')
       const title = document.createElement('span');
       title.textContent = item.title;
       menuButton.appendChild(title);
+
+      const holdColor = document.createElement('span');
+      holdColor.textContent = item.holdColor;
+      menuButton.appendChild(holdColor);
 
       const setter = document.createElement('span');
       setter.textContent = item.setter;
